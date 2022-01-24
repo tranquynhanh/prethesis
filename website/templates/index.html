@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iot based air quality</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="../static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../static/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="./static/css/base.css">
+    <link rel="stylesheet" href="./static/css/style.css">
+    
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <form action="/" method="post">
+                <a href="#">
+                    <i class="fas fa-map-marker-alt"></i>
+                </a>
+                <a href="#" class="active">
+                    <i class="fas fa-th"></i>
+                </a>
+            </form>
+        </div>
+    </header>  
+    <section class="air-component-selector">
+        <img src="./static/img/20160922121925_banner-hochiminhcity2.jpg" alt="church">
+        <form action="/" method="post" class="air-component-selector__overlay">
+            <div class="carbon-dioxide overlay__item">
+                <div class="overlay__item__overlay">
+                    <input class="extreme" type="submit" value="co2" name="action">
+                </div>
+                <div class="overlay__item-info">
+                    <h3>CO2</h3>
+                    <p>extreme</p>
+                    <p><span>{{CO2}}</span>ppm</p>
+                </div>
+            </div>
+            <div class="carbon-monoxide overlay__item">
+                <div class="overlay__item__overlay">
+                    <div class="overlay__item__overlay">
+                        <input class="moderate" type="submit" value="co" name="action">
+                    </div>
+                </div>
+                <div class="overlay__item-info">
+                    <h3>CO</h3>
+                    <p>average</p>
+                    <p><span>{{CO}}</span>ppm</p>
+                </div>
+            </div>
+            <div class="PM2.5 overlay__item">
+                <div class="overlay__item__overlay">
+                    <div class="overlay__item__overlay">
+                        <input class="good" type="submit" value="pm25" name="action">
+                    </div>
+                </div>
+                <div class="overlay__item-info">
+                    <h3>PM2.5</h3>
+                    <p>good</p>
+                    <p><span>{{PM25}}</span>µm/m3</p>
+                </div>
+            </div>
+            <div class="UV_index overlay__item">
+                <div class="overlay__item__overlay">
+                    <div class="overlay__item__overlay">
+                        <input class="extreme" type="submit" value="UV" name="action">
+                    </div>
+                </div>
+                <div class="overlay__item-info">
+                    <h3>UVI</h3>  
+                    <p>bad</p>
+                    <p><span>{{UV}}</span></p>
+                </div>
+            </div>
+            <div class="temperature-select overlay__item">
+                <div class="overlay__item__overlay">
+                    <div class="overlay__item__overlay">
+                        <input type="submit" value="temperature-select" name="action">
+                    </div>
+                </div>
+                <div class="overlay__item-info">
+                    <h3>temperature</h3>
+                    <p><span>{{temperature}}</span>°C</p>
+                </div>
+            </div>
+            <div class="humidity overlay__item">
+                <div class="overlay__item__overlay">
+                    <div class="overlay__item__overlay">
+                    <input type="submit" value="humidity" name="action">
+                    </div>
+                </div>
+                <div class="overlay__item-info">
+                    <h3>humidity</h3>
+                    <p><span>{{humidity}}</span>%</p>
+                </div>
+            </div>
+        </form>
+    </section>
+<!-- 
+    UV index: low < 2
+              moderate  3-5
+              high 6-7
+              very high 8-10
+              extreme 11+
+    CO2: excellent < 600
+         good 700-800
+         fair 900-1000
+         mediocre 1100-1500
+         bad 1600-2100
+    CO: accept < 9
+        moderate 10-20 
+        high 21-40
+        very high 41-50
+        extreme >50
+
+    PM2.5 good 0-30
+          satisfactory 31-60
+          moderate 61-90
+          poor 91-120
+          very poor 121-250
+          severe >251 -->
+    
+    <section class="temperature">
+        <img src="./static/img/5357279_117991313_2726740530935067_4955793735409006465_n.jpg" alt="temperature">
+        <div class="temperature__overlay">
+            <div class="temperature__today">
+                <h2>Distric 12, HCMC</h2>
+                <small>100N - 100E</small>
+                <h3 class="time">09:30 am</h3>
+                <h3 class="date">03 Oct</h3>
+                <p>Thursday</p>
+                <p class="current__temperature"><span>{{temperature}}</span>°C</p>
+            </div>
+        
+            <div class="temperature__predict">
+                <ul>
+                    <li>01:00 am</li>
+                    <li>02:00 am</li>
+                    <li>03:00 am</li>
+                    <li>04:00 am</li>
+                    <li>05:00 am</li>
+                </ul>
+                <ul>
+                    <li>25°C</li>
+                    <li>26°C</li>
+                    <li>27°C</li>
+                    <li>28°C</li>
+                    <li>29°C</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="air-component-predict">
+        <div class="heading">
+          <div class="heading-left">
+            <h2>Today</h2>
+            <i class="fas fa-chevron-right"></i>
+          </div>
+          <form action="/" method="post">
+            <label for="date-selector">Date:</label>
+            <input type="date" id="date-selector" name="date-selector">
+            <input type="submit" value="submit" name="action" class="submit-date">
+          </form>
+          <form action="/" method="post" class="period-selector">
+            <input type="submit" value="5 MINS" name="action_time">
+            <input type="submit" value="HOUR" name="action_time">
+            <input type="submit" value="DAY" name="action_time">
+          </form>
+        </div>
+        <div class="line-details" id="box">
+          <canvas id="lineChart" width="1000" height="200"></canvas>
+        </div>
+        <div class="air-component-predict__footer">
+            <div class="predict-list">
+                <div class="owl-carousel">
+                    {% for i in range(24) %}
+                    <div class="item predict-item">
+                        <p class="hour">{{date_pred[i]}}</p>
+                        <p class="time_pred">{{time_pred[i]}}</p>
+                        <p class="value">{{data_pred[i]}}</p>
+                        {% if pollutant == "CO2" or pollutant == "CO"%}
+                        <span class="unit">ppm</span>
+                        {% endif %}
+                        {% if pollutant == "PM2.5" %}
+                        <span class="unit">µm/m3</span>
+                        {% endif %}
+
+                        {% if pollutant == "temperature" %}
+                        <span class="unit">°C</span>
+                        {% endif %}
+
+                        {% if pollutant == "humidity" %}
+                        <span class="unit">%</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="notice">
+                <p>Stop using all appliances, switch them off, and open doors and windows to ventilate the property
+                <br />
+                Evacuate the property immediately – stay calm and avoid raising your heart rate</p>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../static/js/owl.carousel.min.js"></script>
+    <script>
+        $('.owl-carousel').owlCarousel({
+      loop:true,
+      margin:10, 
+      nav: true,
+      items: 4
+  })
+      </script>
+    <script type="text/javascript">   
+    $(document).ready(function () {
+				setTimeout(function(){
+				  location.reload();
+				}, 350000);		
+			});
+    </script>
+    <script>
+      var ctx = document.getElementById("lineChart").getContext("2d");
+      gradient = ctx.createLinearGradient(500, 0, 100, 0);
+      gradient.addColorStop(0, 'rgb(238, 219, 16)');
+      gradient.addColorStop(0.4, "rgb(204, 51, 96)");
+      gradient.addColorStop(1, 'rgb(204, 51, 96)');
+    //   rgb(215, 72, 154)
+      gradientFill = ctx.createLinearGradient(500, 0, 100, 0);
+      gradientFill.addColorStop(0, 'rgba(238, 219, 16, 0.6)');
+      gradientFill.addColorStop(0.4, 'rgba(204, 51, 96, 0.6)');
+      gradientFill.addColorStop(1, 'rgba(204, 51, 96, 0.6)');
+      var pieChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: {{labels | safe}},
+          datasets: [
+            {
+              data: {{values | safe}},
+              fill: true,
+              backgroundColor: gradientFill,
+			  pointBackgroundColor: gradient,
+			  borderWidth: 3,
+			  borderColor: gradient
+            }
+          ]
+        }, 
+        options: {
+          responsive: false,
+          tooltips: {
+            callbacks: {
+              labels: {{labels | safe}},
+              data: {{values | safe}} 
+            }
+          },
+          plugins: {
+            legend: {
+                display: false,
+                labels: {
+                    color: 'white'
+                }
+            }
+          },
+          scales: {
+            x: { 
+                gridLines: {
+                    display: false,
+                },
+                ticks: {
+                  color: "white", 
+                }
+            },
+            y: {
+                gridLines: {
+                    display: false,
+                },
+                ticks: {
+                  color: "white", // this here
+                }
+            },
+          }
+        }
+      });
+    </script>
+    
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
